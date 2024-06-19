@@ -13,6 +13,7 @@ def solve(prob_path):
             if "level_1" in prob_path:
                 os.system(f"python bfs.py {file_path}")
                 os.system(f"python astar_heuristic1.py {file_path}")
+                os.system(f"python hill_climbing.py {file_path}")
 
 if __name__ == "__main__":
     main()
