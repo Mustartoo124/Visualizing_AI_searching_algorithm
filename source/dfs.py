@@ -1,78 +1,81 @@
 import sys
 from WriteOutput import *
 import visualizer
-from visualizer import frames,draw_cell, load_maze, dx, dy, WIN, LONGDELAY
+from visualizer import frames, draw_cell, load_maze, dx, dy, WIN, LONGDELAY
+import pygame
 
-pygame.display.set_caption("DFS")
+pygame.display.set_caption("DFS Search")
 
 # --- WRITE GRAPH FUNCTION HERE ---
-# You can call function draw_cell(x, y, IMG) to draw IMG at cell (x, y)
+def find_start(grid, num_row, num_col):
+    for i in range(num_row):
+        for j in range(num_col):
+            if grid[i][j] == 'S':
+                return (i, j)
+    return None
 
-def DFS(a, rows, cols):
-    start = [-1, -1]
-    end = [-1, -1]
-    vis = [[False for j in range(cols)] for i in range(rows)]
-    trace = [[[-1, -1] for j in range(cols)] for i in range(rows)]
+def find_ends(grid, num_row, num_col):
+    ends = []
+    for i in range(num_row):
+        for j in range(num_col):
+            if grid[i][j] == 'E':
+                ends.append((i, j))
+                if len(ends) == 2:
+                    return ends
+    return ends
 
-    for i in range(rows):
-        for j in range(cols):
-            if a[i][j] == 'S':
-                start = [i, j]
-            if a[i][j] != 'x' and (i == 0 or i == rows - 1 or j == 0 or j == cols - 1):
-                end = [i, j]
-
-    found = False
-
-    def inGrid(x, y):
-        return x >= 0 and x < rows and y >= 0 and y < cols
-
-    def recurse(x, y):
-        nonlocal found
-        if found:
-            return
-        vis[x][y] = True
-        for i in range(4):
-            new_x = x + dx[i]
-            new_y = y + dy[i]
-
-            if (found):
-                return
-
-            if inGrid(new_x, new_y) and not vis[new_x][new_y] and a[new_x][new_y] != 'x':
-                trace[new_x][new_y] = [x, y]
-                if [new_x, new_y] == end:
-                    found = True
-                    return
-
-                draw_cell(new_x, new_y, visualizer.VISITED_IMG)
-                recurse(new_x, new_y)
-
-    recurse(start[0], start[1])
-
-
+def dfs(grid, num_row, num_col, start, end):
+    visited = [[False] * num_col for _ in range(num_row)]
     path = []
-    if (found):
-        # Trace path
-        X, Y = end
-        while True:
-            if [X, Y] == [-1, -1]:
-                break
-            path.append([X, Y])
-            X, Y = trace[X][Y]
-        path.reverse()
 
-    return path
+    def is_valid(x, y):
+        return 0 <= x < num_row and 0 <= y < num_col and not visited[x][y] and grid[x][y] != 'x'
 
-def draw_path(path):
-    if len(path) == 0:
+    def dfs_helper(x, y):
+        nonlocal path
+        if (x, y) == end:
+            path.append((x, y))
+            return True
+        if is_valid(x, y):
+            visited[x][y] = True
+            path.append((x, y))
+            for i in range(4):
+                new_x, new_y = x + dx[i], y + dy[i]
+                if dfs_helper(new_x, new_y):
+                    return True
+            path.pop()
+            visited[x][y] = False
+        return False
+
+    if dfs_helper(start[0], start[1]):
+        return path
+    else:
+        return []
+
+def find_paths(grid, num_row, num_col):
+    start = find_start(grid, num_row, num_col)
+    ends = find_ends(grid, num_row, num_col)
+    
+    if not start or len(ends) < 2:
+        print("Invalid maze configuration.")
+        return [], []
+
+    path1 = dfs(grid, num_row, num_col, start, ends[0])
+    path2 = dfs(grid, num_row, num_col, start, ends[1])
+
+    return path1, path2
+
+def draw_paths(paths):
+    if not paths[0] or not paths[1]:
         return
     pygame.time.delay(LONGDELAY)
-    draw_cell(path[0][0], path[0][1], visualizer.START_CHECK_IMG)
-    end = path[-1]
-    path = path[1:-1]
-    for u, v in path:
-        draw_cell(u, v, visualizer.PATH_IMG)
-    draw_cell(end[0], end[1], visualizer.DOOR_OPEN)
+    for path in paths:
+        draw_cell(path[0][0], path[0][1], visualizer.START_CHECK_IMG)
+        end = path[-1]
+        path = path[1:-1]
+        for x, y in path:
+            draw_cell(x, y, visualizer.PATH_IMG)
+        draw_cell(end[0], end[1], visualizer.DOOR_OPEN)
 
 # ---------------------------------
 
@@ -80,20 +83,23 @@ def main(maze_path):
     maze_data, gift_data, rows, cols = load_maze(maze_path)
 
     # --- CALL GRAPH FUNCTION HERE ---
-    # Ex: DFS(maze_data, gift_data, rows, cols)
-    path = DFS(maze_data, rows, cols)
-    draw_path(path)
+    paths = find_paths(maze_data, rows, cols)
+    if paths:
+        draw_paths(paths)
 
-    dir_name = generate_output_path(maze_path, "dfs")
-    cost_file = dir_name + "/dfs.txt"
-    writeToFile(cost_file, path, WIN=WIN, frames=frames)
+        dir_name = generate_output_path(maze_path, "dfs")
+        cost_file = dir_name + "/dfs.txt"
+        writeToFile(cost_file, paths, WIN=WIN, frames=frames)
+    else:
+        print("No path found.")
 
     # --------------------------------
 
     pygame.quit()
 
-if len(sys.argv) != 2:
-    print("Usage: python dfs.py <path>")
-else:
-    maze_path = sys.argv[1]
-    main(maze_path)
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python dfs.py <path>")
+    else:
+        maze_path = sys.argv[1]
+        main(maze_path)
