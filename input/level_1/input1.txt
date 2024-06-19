@@ -1,18 +1,18 @@
 0
 xxxxxxxxxxxxxxxxx
-x       x      Ex
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-xS              x 
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-x x x x x x x x x
-x       x      Ex
+x91x1x3x5x4x6x1Ex
+x9x9x7x7x8x8x739x
+x345x9x2x6x1x5x7x
+x4x7731115x97162x
+x8x6x3x8x233x654x
+x2x5x4x9x74351x8x
+x1x7x3x2x659x5x8x
+xS49615x213x1x7xx
+x9x218x31557x4x9x
+x3x5x116x4x2x8x7x
+x8x412x7x1198366x
+x749x3x586746228x
+x2x6x588x741x9x3x
+x154x9x263163715x
+x8x2x596x124x7xEx
 xxxxxxxxxxxxxxxxx

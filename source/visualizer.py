@@ -35,13 +35,23 @@ TELEPORT_OUT_VISITED_IMG = pygame.image.load(os.path.join('..', 'Assets', 'telep
 STATION_CHECK_IMG = pygame.image.load(os.path.join('..', 'Assets', 'bus_stop_checked.png'))
 GIFT_IMG = pygame.image.load(os.path.join('..', 'Assets', 'gift.jpg'))
 GIFT_CHECKED_IMG = pygame.image.load(os.path.join('..', 'Assets', 'gift_checked.png'))
-
+NUMBER0_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number0.jpg'))
+NUMBER1_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number1.jpg'))
+NUMBER2_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number2.jpg'))
+NUMBER3_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number3.jpg'))
+NUMBER4_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number4.jpg'))
+NUMBER5_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number5.jpg'))
+NUMBER6_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number6.jpg'))
+NUMBER7_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number7.jpg'))
+NUMBER8_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number8.jpg'))
+NUMBER9_IMG = pygame.image.load(os.path.join('..', 'Assets', 'number9.jpg'))
 
 def scale_img(CELL_WIDTH, CELL_HEIGHT):
     # Scale all icons to fit with the pygame's map
 
     global START_IMG, END_IMG, GIFT_IMG, GIFT_CHECKED_IMG, WALL_IMG, VISITED_IMG, PATH_IMG, START_CHECK_IMG, DOOR_OPEN
     global TELEPORT_IN_IMG, TELEPORT_IN_VISITED_IMG, TELEPORT_OUT_IMG, TELEPORT_OUT_VISITED_IMG, STATION_CHECK_IMG
+    global NUMBER0_IMG, NUMBER1_IMG, NUMBER2_IMG, NUMBER3_IMG, NUMBER4_IMG, NUMBER5_IMG, NUMBER6_IMG, NUMBER7_IMG, NUMBER8_IMG, NUMBER9_IMG 
     START_IMG = pygame.transform.scale(START_IMG, (CELL_WIDTH, CELL_HEIGHT))
     END_IMG = pygame.transform.scale(END_IMG, (CELL_WIDTH, CELL_HEIGHT))
     GIFT_IMG = pygame.transform.scale(GIFT_IMG, (CELL_WIDTH, CELL_HEIGHT))
@@ -57,7 +67,16 @@ def scale_img(CELL_WIDTH, CELL_HEIGHT):
     STATION_CHECK_IMG = pygame.transform.scale(STATION_CHECK_IMG, (CELL_WIDTH, CELL_HEIGHT))
     GIFT_IMG = pygame.transform.scale(GIFT_IMG, (CELL_WIDTH, CELL_HEIGHT))
     GIFT_CHECKED_IMG = pygame.transform.scale(GIFT_CHECKED_IMG, (CELL_WIDTH, CELL_HEIGHT))
-
+    NUMBER0_IMG = pygame.transform.scale(NUMBER0_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER1_IMG = pygame.transform.scale(NUMBER1_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER2_IMG = pygame.transform.scale(NUMBER2_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER3_IMG = pygame.transform.scale(NUMBER3_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER4_IMG = pygame.transform.scale(NUMBER4_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER5_IMG = pygame.transform.scale(NUMBER5_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER6_IMG = pygame.transform.scale(NUMBER6_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER7_IMG = pygame.transform.scale(NUMBER7_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER8_IMG = pygame.transform.scale(NUMBER8_IMG, (CELL_WIDTH, CELL_HEIGHT))
+    NUMBER9_IMG = pygame.transform.scale(NUMBER9_IMG, (CELL_WIDTH, CELL_HEIGHT))
 frames = []
 
 
@@ -89,12 +108,27 @@ def draw_maze(maze_data, rows, cols):
                 draw_cell_no_delay(row, col, START_IMG)
             elif cell == 'E': # end point
                 draw_cell_no_delay(row, col, END_IMG)
-            elif cell == '+':
-                draw_cell_no_delay(row, col, GIFT_IMG)
-            elif cell == 'o':
-                draw_cell_no_delay(row, col, TELEPORT_IN_IMG)
-            elif cell == 'O':
-                draw_cell_no_delay(row, col, TELEPORT_OUT_IMG)
+            elif cell == 'O' or cell == ' ':
+                draw_cell_no_delay(row, col, NUMBER0_IMG)
+            elif cell == '1': 
+                draw_cell_no_delay(row, col, NUMBER1_IMG)
+            elif cell == '2':
+                draw_cell_no_delay(row, col, NUMBER2_IMG)
+            elif cell == '3':
+                draw_cell_no_delay(row, col, NUMBER3_IMG)
+            elif cell == '4':
+                draw_cell_no_delay(row, col, NUMBER4_IMG)
+            elif cell == '5':
+                draw_cell_no_delay(row, col, NUMBER5_IMG)
+            elif cell == '6':
+                draw_cell_no_delay(row, col, NUMBER6_IMG)
+            elif cell == '7':
+                draw_cell_no_delay(row, col, NUMBER7_IMG)
+            elif cell == '8':
+                draw_cell_no_delay(row, col, NUMBER8_IMG)
+            elif cell == '9':
+                draw_cell_no_delay(row, col, NUMBER9_IMG)
+                
     pygame_screenshot = pygame.surfarray.array3d(pygame.display.get_surface())
     bgr_frame = cv2.cvtColor(pygame_screenshot, cv2.COLOR_RGB2BGR)
     frames.append(bgr_frame)
