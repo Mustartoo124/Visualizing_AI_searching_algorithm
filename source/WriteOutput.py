@@ -3,28 +3,30 @@ import cv2
 import pygame
 
 
-def writeToFile(file_name="output.txt", path=None, bonus=0, WIN=None, frames=None):
+def writeToFile(file_name="output.txt", path=None, bonus=0, WIN=None, frames=None, visited_count=None, execution_time=None):
     if path is None:
         return
 
     # Create the directory structure if it doesn't exist
     directory = os.path.dirname(file_name)
-    # print(directory)
     if directory:
         os.makedirs(directory, exist_ok=True)
 
     with open(file_name, 'w') as out:
         leng = len(path)
         if leng == 0:
-            out.write("NO")
+            out.write("NO\n")
         else:
-            out.write(str(leng - 1 + bonus))
-        # Write path if needed
-        # out.write('\n')
-        # for point in path:
-        #     out.write('({}, {}) '.format(point[0], point[1]))
+            out.write(f"{leng - 1 + bonus}\n")
+        # Ghi visited_count và execution_time vào file
+        if visited_count is not None:
+            out.write(f"Visited Nodes: {visited_count}\n")
+        if execution_time is not None:
+            out.write(f"Execution Time: {execution_time:.4f} seconds\n")
+
     if WIN is None:
         return
+
     image_path = file_name.split('.txt')[0] + '.jpg'
     pygame.image.save(WIN, image_path)
 
@@ -39,7 +41,6 @@ def writeToFile(file_name="output.txt", path=None, bonus=0, WIN=None, frames=Non
     out.release()
 
     print(f"-----Saved cost(.txt), path(.jpg) and video(.mp4) at {directory}-----")
-
 
 def checkDuplicatePointInPath(path):
     s = set()
