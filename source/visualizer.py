@@ -108,7 +108,11 @@ def draw_maze(maze_data, rows, cols):
                 draw_cell_no_delay(row, col, START_IMG)
             elif cell == 'E': # end point
                 draw_cell_no_delay(row, col, END_IMG)
-            elif cell == 'O' or cell == ' ':
+            elif cell == 'o':
+                draw_cell_no_delay(row, col, TELEPORT_IN_IMG)
+            elif cell == 'O': # end point
+                draw_cell_no_delay(row, col, TELEPORT_OUT_IMG)
+            elif cell == '0' or cell == ' ':
                 draw_cell_no_delay(row, col, NUMBER0_IMG)
             elif cell == '1': 
                 draw_cell_no_delay(row, col, NUMBER1_IMG)

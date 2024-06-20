@@ -54,7 +54,7 @@ def bfs(grid, teleport_data, rows, cols):
                     continue
                 queue.append((new_x, new_y))
 
-                if new_x == 0 or new_x == rows - 1 or new_y == 0 or new_y == cols - 1:
+                if new_x == 15 and new_y == 18:
                     path = []
                     while new_x != start_x or new_y != start_y:
                         path.append((new_x, new_y))
